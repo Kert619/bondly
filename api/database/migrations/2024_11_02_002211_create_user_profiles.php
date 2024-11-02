@@ -19,17 +19,17 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->date('birth_date');
-            $table->enum('gender', [GenderEnum::MALE->value,GenderEnum::FEMALE->value]);
-            $table->enum('relationship_status', [RelationshipStatusEnum::SINGLE->value,RelationshipStatusEnum::MARRIED->value,RelationshipStatusEnum::WIDOWED->value,RelationshipStatusEnum::SPOUSE->value])->nullable();
-            $table->string('address',1000)->nullable();
+            $table->enum('gender', [GenderEnum::MALE->value, GenderEnum::FEMALE->value])->nullable();
+            $table->enum('relationship_status', [RelationshipStatusEnum::SINGLE->value, RelationshipStatusEnum::MARRIED->value, RelationshipStatusEnum::WIDOWED->value, RelationshipStatusEnum::SPOUSE->value])->nullable();
+            $table->string('address', 1000)->nullable();
             $table->string('postal_code')->nullable();
             $table->string('occupation')->nullable();
             $table->string('company_name')->nullable();
             $table->string('school')->nullable();
             $table->text('profile_photo')->nullable();
             $table->text('cover_photo')->nullable();
-            $table->string('bio',500)->nullable();
-            $table->enum('mood', [MoodEnum::ALL->value, MoodEnum::HAPPY->value,MoodEnum::AMUSED->value,MoodEnum::LOVE->value, MoodEnum::ANGRY->value,MoodEnum::SAD->value])->default(MoodEnum::ALL->value);
+            $table->string('bio', 500)->nullable();
+            $table->enum('mood', [MoodEnum::ALL->value, MoodEnum::HAPPY->value, MoodEnum::AMUSED->value, MoodEnum::LOVE->value, MoodEnum::ANGRY->value, MoodEnum::SAD->value])->default(MoodEnum::ALL->value);
             $table->timestamps();
         });
     }
