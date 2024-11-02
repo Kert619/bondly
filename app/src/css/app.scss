@@ -1,1 +1,9 @@
 // app global css in SCSS form
+@font-face {
+  font-family: DynaPuff;
+  src: url(./fonts/DynaPuff-Medium.ttf);
+}
+
+.custom-font {
+  font-family: 'DynaPuff';
+}

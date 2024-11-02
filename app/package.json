@@ -10,10 +10,11 @@
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "dev:android": "quasar dev -m capacitor -T android --host=192.168.1.109",
+    "dev:android": "quasar dev -m capacitor -T android",
     "build": "quasar build"
   },
   "dependencies": {
+    "@capacitor/app": "^6.0.1",
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
     "pinia": "^2.0.11",
