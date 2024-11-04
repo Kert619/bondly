@@ -42,6 +42,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereSchool($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereUserId($value)
+ * @property string $first_name
+ * @property string $last_name
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereLastName($value)
  * @mixin \Eloquent
  */
 class UserProfile extends Model

@@ -5,7 +5,6 @@ namespace App\Http\Requests\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -34,8 +33,9 @@ class RegisterUserRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'password' => Password::default(),
-            'birth_date' => 'required|date',
+            'password' => ['required', 'confirmed', 'min:8'],
+            'birth_date' => ['required', 'date'],
+            'device_name' => ['required', 'string', 'max:255']
         ];
     }
 }

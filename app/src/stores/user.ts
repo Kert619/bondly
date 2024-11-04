@@ -22,6 +22,8 @@ export const useUserStore = defineStore('user', () => {
         Notify.create({
           message: error.response.data.message,
           type: 'negative',
+          position: 'bottom',
+          actions: [{ icon: 'close', color: 'white', round: true }],
         });
         throw error;
       });
