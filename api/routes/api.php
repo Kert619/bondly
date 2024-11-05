@@ -23,7 +23,7 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash) {
         $user->markEmailAsVerified();
     }
 
-    return view('email.already_verified');
+    return view('mail.already_verified');
 })->middleware(['signed'])->name('verification.verify');
 
 //protected routes
