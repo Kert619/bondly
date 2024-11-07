@@ -7,3 +7,31 @@
 .custom-font {
   font-family: 'DynaPuff';
 }
+
+//theme
+.body--light .page {
+  background-color: $grey-1;
+  &-header {
+    background-color: $grey-1;
+  }
+}
+
+.body--dark .page {
+  background-color: $dark;
+  &-header {
+    background-color: $dark;
+  }
+}
+
+//page
+.page {
+  overflow: hidden;
+  &-header {
+    height: 45px;
+  }
+  &-body {
+    &-spacer-header {
+      height: 45px;
+    }
+  }
+}
