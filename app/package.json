@@ -1,9 +1,9 @@
 {
   "name": "bondly",
   "version": "0.0.1",
-  "description": "A Quasar Project",
+  "description": "A social media app",
   "productName": "Bondly",
-  "author": "kertCI <kert@car.info>",
+  "author": "Kert Tatoy",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",

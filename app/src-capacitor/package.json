@@ -1,8 +1,8 @@
 {
   "name": "bondly",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "author": "kertCI <kert@car.info>",
+  "description": "A social media app",
+  "author": "Kert Tatoy",
   "private": true,
   "dependencies": {
     "@capacitor/android": "^6.1.2",
