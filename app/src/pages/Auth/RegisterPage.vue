@@ -1,5 +1,9 @@
 <template>
   <page-component>
+    <page-header>
+      <page-back-button to="/login" />
+    </page-header>
+
     <page-body remove-space-footer>
       <div class="q-pa-md fit row justify-center">
         <q-form @submit="register">
@@ -90,10 +94,6 @@
         </q-form>
       </div>
     </page-body>
-
-    <page-header>
-      <q-btn flat dense icon="arrow_back" to="/login" />
-    </page-header>
   </page-component>
 </template>
 
@@ -108,6 +108,7 @@ import {
 } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import { RegisterUserInfo, useUserStore } from 'src/stores/user';
+import { Device } from '@capacitor/device';
 
 const userStore = useUserStore();
 
@@ -118,6 +119,7 @@ const form: Ref<RegisterUserInfo> = ref({
   email: '',
   password: '',
   password_confirmation: '',
+  device_name: '',
 });
 
 const rules = computed(() => {
@@ -157,6 +159,9 @@ const v$ = useVuelidate(rules, form);
 const register = async () => {
   await v$.value.$validate();
   if (v$.value.$invalid) return;
+
+  const deviceName = (await Device.getInfo()).name;
+  form.value.device_name = deviceName;
 
   await userStore.register(form.value);
 };

@@ -25,9 +25,12 @@ class RegisterUserController extends Controller
             'birth_date' => $validated['birth_date']
         ]);
 
-        event(new Registered($user));
 
-        $token = $user->createToken($validated['device_name'])->plainTextToken;
+        $deviceName = $validated['device_name'] ?? 'Token for user ID ' . $user->id;
+
+        $token = $user->createToken($deviceName)->plainTextToken;
+
+        event(new Registered($user));
 
         return response()->json([
             'message' => 'User registered successfully. Please verify your email.',

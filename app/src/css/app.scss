@@ -25,13 +25,45 @@
 
 //page
 .page {
+  z-index: 2000;
   overflow: hidden;
   &-header {
     height: 45px;
+    z-index: 1000;
   }
   &-body {
     &-spacer-header {
       height: 45px;
+      z-index: 1001;
     }
   }
+  &-nudger {
+    transition: transform $transition-duration;
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 2001;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity $transition-duration;
+    }
+    &.nudge-left {
+      transform: translateX(-60px);
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+//transitions/animations
+.slideInRight,
+.slideOutRight {
+  --webkit-animation-duration: $transition-duration;
+  --moz-animation-duration: $transition-duration;
+  --o-animation-duration: $transition-duration;
+  animation-duration: $transition-duration;
 }

@@ -9,6 +9,7 @@ export type RegisterUserInfo = {
   email: string;
   password: string;
   password_confirmation: string;
+  device_name?: string;
 };
 
 export const useUserStore = defineStore('user', () => {

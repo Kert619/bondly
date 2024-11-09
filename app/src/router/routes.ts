@@ -6,16 +6,17 @@ const routes: RouteRecordRaw[] = [
     redirect: '/login',
   },
   {
-    path: '/auth',
+    path: '/login',
     component: () => import('layouts/AuthLayout.vue'),
     children: [
       {
-        path: '/login',
+        path: '',
         component: () => import('pages/Auth/LoginPage.vue'),
         children: [
           {
-            path: '/register',
+            path: 'register',
             component: () => import('pages/Auth/RegisterPage.vue'),
+            alias: '/register',
           },
         ],
       },

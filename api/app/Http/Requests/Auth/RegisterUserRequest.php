@@ -35,7 +35,7 @@ class RegisterUserRequest extends FormRequest
             ],
             'password' => ['required', 'confirmed', 'min:8'],
             'birth_date' => ['required', 'date'],
-            'device_name' => ['required', 'string', 'max:255']
+            'device_name' => ['nullable', 'string', 'max:255']
         ];
     }
 }

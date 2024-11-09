@@ -1,5 +1,14 @@
 <template>
   <page-component>
+    <page-header class="justify-end">
+      <q-btn
+        flat
+        dense
+        :icon="darkMode ? 'dark_mode' : 'light_mode'"
+        color="primary"
+        @click="darkMode = !darkMode"
+      />
+    </page-header>
     <page-body remove-space-header remove-space-footer>
       <div class="window-height row justify-center items-center">
         <q-card class="login-card bg-transparent" flat>
@@ -47,18 +56,19 @@
         </q-card>
       </div>
     </page-body>
-
-    <page-header class="justify-end"> DARK MODE </page-header>
   </page-component>
 </template>
 
 <script setup lang="ts">
 import { App } from '@capacitor/app';
 import { useQuasar } from 'quasar';
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { Preferences } from '@capacitor/preferences';
 
+const $q = useQuasar();
 const route = useRoute();
+const darkMode = ref($q.dark.isActive);
 
 const form = {
   email: '',
@@ -75,8 +85,10 @@ onUnmounted(() => {
   App.removeAllListeners();
 });
 
-const $q = useQuasar();
-$q.dark.set(true);
+watch(darkMode, async (newVal) => {
+  $q.dark.set(newVal);
+  await Preferences.set({ key: 'dark_mode', value: `${newVal}` });
+});
 </script>
 
 <style scoped lang="scss">

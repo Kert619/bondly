@@ -88,7 +88,7 @@ module.exports = configure(function (/* ctx */) {
       ],
 
       env: {
-        API: process.env.API ?? 'http://192.168.254.117:8000',
+        API: process.env.API ?? 'http://192.168.1.109:8000',
       },
     },
 
