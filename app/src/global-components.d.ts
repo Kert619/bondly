@@ -2,6 +2,7 @@ import PageComponent from 'components/Page/PageComponent.vue';
 import PageHeader from 'components/Page/PageHeader.vue';
 import PageBody from 'components/Page/PageBody.vue';
 import PageBackButton from 'components/Page/PageBackButton.vue';
+import AppLogo from 'components/AppLogo.vue';
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -9,5 +10,6 @@ declare module '@vue/runtime-core' {
     PageHeader: typeof PageHeader;
     PageBody: typeof PageBody;
     PageBackButton: typeof PageBackButton;
+    AppLogo: typeof AppLogo;
   }
 }

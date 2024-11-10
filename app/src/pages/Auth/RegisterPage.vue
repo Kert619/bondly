@@ -7,7 +7,7 @@
     <page-body remove-space-footer>
       <div class="q-pa-md fit row justify-center">
         <q-form @submit="register">
-          <div class="text-center text-h4 custom-font">Bondly</div>
+          <app-logo />
           <div class="text-center text-overline">Register an account</div>
 
           <q-input
@@ -107,10 +107,15 @@ import {
   helpers,
 } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
-import { RegisterUserInfo, useUserStore } from 'src/stores/user';
+import { RegisterUserInfo, useAuthStore } from 'src/stores/auth';
 import { Device } from '@capacitor/device';
+import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
+import { Preferences } from '@capacitor/preferences';
 
-const userStore = useUserStore();
+const $q = useQuasar();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const form: Ref<RegisterUserInfo> = ref({
   first_name: '',
@@ -160,10 +165,20 @@ const register = async () => {
   await v$.value.$validate();
   if (v$.value.$invalid) return;
 
+  $q.loading.show();
   const deviceName = (await Device.getInfo()).name;
   form.value.device_name = deviceName;
 
-  await userStore.register(form.value);
+  authStore
+    .register(form.value)
+    .then(async () => {
+      await Preferences.set({
+        key: 'auth_token',
+        value: authStore.token ?? '',
+      });
+      router.push('/verify-email');
+    })
+    .finally(() => $q.loading.hide());
 };
 </script>
 

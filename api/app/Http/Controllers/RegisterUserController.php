@@ -18,7 +18,7 @@ class RegisterUserController extends Controller
             'password' => $validated['password']
         ]);
 
-        UserProfile::create([
+        $userProfile =  UserProfile::create([
             'user_id' => $user->id,
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
@@ -35,6 +35,8 @@ class RegisterUserController extends Controller
         return response()->json([
             'message' => 'User registered successfully. Please verify your email.',
             'token' => $token,
+            'user' => $user,
+            'user_profile' => $userProfile
         ], 201);
     }
 }

@@ -9,17 +9,42 @@
 }
 
 //theme
-.body--light .page {
-  background-color: $grey-1;
-  &-header {
+.body--light {
+  .page {
     background-color: $grey-1;
+    &-header {
+      background-color: $grey-1;
+    }
+  }
+
+  .loading-box {
+    background-color: $grey-2;
+    color: $grey-9;
   }
 }
 
-.body--dark .page {
-  background-color: $dark;
-  &-header {
+.body--dark {
+  .page {
     background-color: $dark;
+    &-header {
+      background-color: $dark;
+    }
+  }
+
+  .loading-box {
+    background-color: $grey-9;
+    color: $grey-2;
+  }
+}
+
+//loading
+.q-loading__box {
+  gap: 10px;
+  flex-direction: row;
+
+  .q-spinner,
+  .q-loading__message {
+    margin: 0;
   }
 }
 
@@ -66,4 +91,9 @@
   --moz-animation-duration: $transition-duration;
   --o-animation-duration: $transition-duration;
   animation-duration: $transition-duration;
+}
+
+//links
+a {
+  color: $blue-5;
 }

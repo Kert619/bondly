@@ -1,13 +1,18 @@
 import { RouteRecordRaw } from 'vue-router';
+import { auth } from 'src/guards/auth';
+import { guest } from 'src/guards/guest';
+import { verified } from 'src/guards/verified';
+import { unverified } from 'src/guards/unverified';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/home',
   },
   {
     path: '/login',
     component: () => import('layouts/AuthLayout.vue'),
+    beforeEnter: [guest],
     children: [
       {
         path: '',
@@ -19,6 +24,25 @@ const routes: RouteRecordRaw[] = [
             alias: '/register',
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/verify-email',
+    component: () => import('pages/Email/VerifyEmailPage.vue'),
+    meta: { requiresAuth: true },
+    beforeEnter: [auth, unverified],
+  },
+
+  {
+    path: '/home',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
+    beforeEnter: [auth, verified],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Home/HomePage.vue'),
       },
     ],
   },

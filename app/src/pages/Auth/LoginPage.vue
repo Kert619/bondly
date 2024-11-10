@@ -9,11 +9,11 @@
         @click="darkMode = !darkMode"
       />
     </page-header>
-    <page-body remove-space-header remove-space-footer>
-      <div class="window-height row justify-center items-center">
-        <q-card class="login-card bg-transparent" flat>
+    <page-body>
+      <div class="absolute-center row justify-center items-center">
+        <q-card class="bg-transparent" flat>
           <q-card-section>
-            <div class="text-center text-h4 custom-font">Bondly</div>
+            <app-logo />
             <div class="text-center text-overline">Login your account</div>
           </q-card-section>
 
@@ -92,7 +92,7 @@ watch(darkMode, async (newVal) => {
 </script>
 
 <style scoped lang="scss">
-.login-card {
+.q-card {
   width: 80vw;
   max-width: 400px;
 }
