@@ -14,6 +14,12 @@ export type RegisterUserInfo = {
   device_name?: string;
 };
 
+export type LoginUserInfo = {
+  email: string;
+  password: string;
+  device_name?: string;
+};
+
 export type User = {
   id: number;
   email: string;
@@ -40,6 +46,29 @@ export const useAuthStore = defineStore('user', () => {
   const register = async (userInfo: RegisterUserInfo) => {
     return api
       .post('/register', userInfo)
+      .then((response) => {
+        token.value = response.data.token;
+        user.value = response.data.user;
+        userProfile.value = response.data.user_profile;
+        return response;
+      })
+      .catch((error) => {
+        Notify.create({
+          message:
+            error.response?.status == 500
+              ? messages[500]
+              : error.response?.data.message,
+          type: 'negative',
+          position: 'bottom',
+          actions: [{ icon: 'close', color: 'white', round: true }],
+        });
+        throw error;
+      });
+  };
+
+  const login = async (userCredentials: LoginUserInfo) => {
+    return api
+      .post('/login', userCredentials)
       .then((response) => {
         token.value = response.data.token;
         user.value = response.data.user;
@@ -110,6 +139,7 @@ export const useAuthStore = defineStore('user', () => {
 
   return {
     register,
+    login,
     loadUser,
     resendEmailVerification,
     token,

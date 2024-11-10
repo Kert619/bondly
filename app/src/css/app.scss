@@ -17,6 +17,11 @@
     }
   }
 
+  .q-footer {
+    background: $grey-1;
+    color: $grey-9;
+  }
+
   .loading-box {
     background-color: $grey-2;
     color: $grey-9;
@@ -29,6 +34,11 @@
     &-header {
       background-color: $dark;
     }
+  }
+
+  .q-footer {
+    background: $dark;
+    color: $grey-1;
   }
 
   .loading-box {
@@ -48,18 +58,34 @@
   }
 }
 
+//layout
+.q-footer {
+  z-index: 3000;
+  height: 55px;
+
+  .q-tab {
+    padding-inline: 0;
+    .q-tab__label {
+      font-size: 12px;
+    }
+  }
+}
+
 //page
 .page {
   z-index: 2000;
   overflow: hidden;
   &-header {
     height: 45px;
-    z-index: 1000;
+    z-index: 1001;
   }
   &-body {
+    z-index: 1000;
     &-spacer-header {
       height: 45px;
-      z-index: 1001;
+    }
+    &-spacer-footer {
+      height: 55px;
     }
   }
   &-nudger {

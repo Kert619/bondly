@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
 import { Preferences } from '@capacitor/preferences';
 import { useAuthStore } from 'src/stores/auth';
+import { Router } from 'src/router';
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -51,7 +52,10 @@ export default boot(({ app, redirect }) => {
         authStore.user = null;
         authStore.userProfile = null;
         await Preferences.remove({ key: 'auth_token' });
-        redirect({ path: '/login' });
+
+        if (Router.currentRoute.value.path != '/login') {
+          redirect({ path: '/login' });
+        }
       }
 
       return Promise.reject(error);

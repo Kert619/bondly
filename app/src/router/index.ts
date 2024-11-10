@@ -4,6 +4,7 @@ import {
   createRouter,
   createWebHashHistory,
   createWebHistory,
+  type Router,
 } from 'vue-router';
 
 import routes from './routes';
@@ -17,12 +18,16 @@ import routes from './routes';
  * with the Router instance.
  */
 
+let Router: Router;
+
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory);
+    : process.env.VUE_ROUTER_MODE === 'history'
+    ? createWebHistory
+    : createWebHashHistory;
 
-  const Router = createRouter({
+  Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
@@ -34,3 +39,5 @@ export default route(function (/* { store, ssrContext } */) {
 
   return Router;
 });
+
+export { Router };

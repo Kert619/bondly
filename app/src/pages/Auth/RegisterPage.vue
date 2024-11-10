@@ -176,7 +176,7 @@ const register = async () => {
         key: 'auth_token',
         value: authStore.token ?? '',
       });
-      router.push('/verify-email');
+      router.replace('/verify-email');
     })
     .finally(() => $q.loading.hide());
 };
