@@ -8,11 +8,9 @@ export default boot(async () => {
   const token = (await Preferences.get({ key: 'auth_token' })).value;
   if (token) {
     const authStore = useAuthStore();
-    await authStore
-      .loadUser()
-      .then(() => {
-        authStore.token = token;
-      })
-      .finally(() => (authStore.appHasInitialized = true));
+    try {
+      await authStore.loadUser(false);
+      authStore.token = token;
+    } catch (error) {}
   }
 });

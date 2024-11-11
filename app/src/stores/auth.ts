@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { api } from 'boot/axios';
 import { Notify } from 'quasar';
 import { ref, Ref } from 'vue';
-import { messages } from 'src/messages';
+import { useErrorMessage } from 'src/composables/useErrorMessage';
 
 export type RegisterUserInfo = {
   first_name: string;
@@ -41,7 +41,6 @@ export const useAuthStore = defineStore('user', () => {
   const token: Ref<string | null> = ref(null);
   const user: Ref<User | null> = ref(null);
   const userProfile: Ref<UserProfile | null> = ref(null);
-  const appHasInitialized = ref(false);
 
   const register = async (userInfo: RegisterUserInfo) => {
     return api
@@ -54,10 +53,7 @@ export const useAuthStore = defineStore('user', () => {
       })
       .catch((error) => {
         Notify.create({
-          message:
-            error.response?.status == 500
-              ? messages[500]
-              : error.response?.data.message,
+          message: useErrorMessage(error),
           type: 'negative',
           position: 'bottom',
           actions: [{ icon: 'close', color: 'white', round: true }],
@@ -77,10 +73,7 @@ export const useAuthStore = defineStore('user', () => {
       })
       .catch((error) => {
         Notify.create({
-          message:
-            error.response?.status == 500
-              ? messages[500]
-              : error.response?.data.message,
+          message: useErrorMessage(error),
           type: 'negative',
           position: 'bottom',
           actions: [{ icon: 'close', color: 'white', round: true }],
@@ -89,7 +82,7 @@ export const useAuthStore = defineStore('user', () => {
       });
   };
 
-  const loadUser = async () => {
+  const loadUser = async (showError = true) => {
     return api
       .get('/user')
       .then((response) => {
@@ -97,15 +90,14 @@ export const useAuthStore = defineStore('user', () => {
         userProfile.value = response.data.user_profile;
       })
       .catch((error) => {
-        Notify.create({
-          message:
-            error.response?.status == 500
-              ? messages[500]
-              : error.response?.data.message,
-          type: 'negative',
-          position: 'bottom',
-          actions: [{ icon: 'close', color: 'white', round: true }],
-        });
+        if (showError) {
+          Notify.create({
+            message: useErrorMessage(error),
+            type: 'negative',
+            position: 'bottom',
+            actions: [{ icon: 'close', color: 'white', round: true }],
+          });
+        }
 
         throw error;
       });
@@ -125,10 +117,7 @@ export const useAuthStore = defineStore('user', () => {
       })
       .catch((error) => {
         Notify.create({
-          message:
-            error.response?.status == 500
-              ? messages[500]
-              : error.response?.data.message,
+          message: useErrorMessage(error),
           type: 'negative',
           position: 'bottom',
           actions: [{ icon: 'close', color: 'white', round: true }],
@@ -145,6 +134,5 @@ export const useAuthStore = defineStore('user', () => {
     token,
     user,
     userProfile,
-    appHasInitialized,
   };
 });

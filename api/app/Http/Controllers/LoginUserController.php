@@ -13,8 +13,8 @@ class LoginUserController extends Controller
     {
 
         $validated = $request->validated();
-        $deviceName = $validated['device_name'];
-        unset($validated['device_name']);
+        $deviceName = $validated['device_name'] ?? null;
+        if ($deviceName) unset($validated['device_name']);
 
         if (Auth::attempt($validated)) {
             $user = User::query()->findOrFail(Auth::user()->id);

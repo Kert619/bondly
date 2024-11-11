@@ -12,6 +12,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('layouts/AuthLayout.vue'),
+    meta: { nudgePage: true },
     beforeEnter: [guest],
     children: [
       {
@@ -43,6 +44,69 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('pages/Home/HomePage.vue'),
+        meta: {
+          childTransitionEnterClass: 'slideInUp',
+          childTransitionLeaveClass: 'slideOutDown',
+        },
+        children: [
+          {
+            path: 'child',
+            component: () => import('pages/Home/HomeChildPage.vue'),
+            meta: { hideFooter: true },
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    path: '/videos',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
+    beforeEnter: [auth, verified],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Videos/VideosPage.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/notifications',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
+    beforeEnter: [auth, verified],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Notifications/NotificationsPage.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/public',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
+    beforeEnter: [auth, verified],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Public/PublicPage.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/events',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
+    beforeEnter: [auth, verified],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/Events/EventsPage.vue'),
       },
     ],
   },

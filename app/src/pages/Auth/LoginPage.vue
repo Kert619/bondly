@@ -6,6 +6,7 @@
         dense
         :icon="darkMode ? 'dark_mode' : 'light_mode'"
         color="primary"
+        round
         @click="darkMode = !darkMode"
       />
     </page-header>

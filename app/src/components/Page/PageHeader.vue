@@ -1,9 +1,12 @@
 <template>
-  <header
-    class="page-header absolute-top row items-center q-gutter-x-sm q-px-md"
-    :class="[{ 'header-shadow': separator }]"
-  >
-    <slot />
+  <header class="page-header absolute-top column">
+    <div
+      class="col row items-center q-gutter-x-md q-px-md"
+      :class="$attrs.class"
+    >
+      <slot />
+    </div>
+    <q-separator v-if="separator" />
   </header>
 </template>
 
@@ -12,13 +15,3 @@ defineProps<{
   separator?: boolean;
 }>();
 </script>
-
-<style scoped lang="scss">
-.body--light .header-shadow {
-  border-bottom: 1px solid $grey-4;
-}
-
-.body--dark .header-shadow {
-  border-bottom: 1px solid $grey-9;
-}
-</style>
