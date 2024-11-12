@@ -2,7 +2,7 @@
   <page-component>
     <page-header separator class="justify-between">
       <app-logo class="text-h6" />
-      <div class="row items-center">
+      <div class="row items-center q-gutter-x-sm">
         <q-btn flat dense icon="search" round to="/home/child" />
         <q-btn flat dense icon="chat" round />
         <q-btn flat dense round>

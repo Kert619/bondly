@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { EventBus, QScrollArea } from 'quasar';
 import { EventBusType } from 'src/boot/event-bus';
-import { inject, ref, Ref } from 'vue';
+import { inject, onActivated, onDeactivated, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 defineProps<{
@@ -21,9 +21,22 @@ const route = useRoute();
 const bus = inject<EventBus<EventBusType>>('bus');
 const scrollRef: Ref<QScrollArea | null> = ref(null);
 
-bus?.on('routeChanged', (path: string) => {
+const handleRouteChanged = (path: string) => {
   if (route.path == path) {
     scrollRef.value?.setScrollPosition('vertical', 0, 500);
+
+    //refresh page content after scrolling to the top
+    setTimeout(() => {
+      console.log(route.path);
+    }, 500);
   }
+};
+
+onActivated(() => {
+  bus?.on('routeChanged', handleRouteChanged);
+});
+
+onDeactivated(() => {
+  bus?.off('routeChanged', handleRouteChanged);
 });
 </script>
