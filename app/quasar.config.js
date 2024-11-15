@@ -88,7 +88,7 @@ module.exports = configure(function (/* ctx */) {
       ],
 
       env: {
-        API: process.env.API ?? 'http://192.168.1.109:8000',
+        API: process.env.API ?? 'http://192.168.1.166:8000',
       },
     },
 
@@ -105,7 +105,7 @@ module.exports = configure(function (/* ctx */) {
           backButtonExit: true / false / '*' / ['/login'],
         },
         notify: {
-          position: 'top',
+          position: 'bottom',
           color: 'primary',
         },
         loading: {

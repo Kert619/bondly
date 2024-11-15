@@ -1,5 +1,9 @@
 <template>
-  <q-scroll-area ref="scrollRef" class="page-body absolute-top fit">
+  <q-scroll-area
+    ref="scrollRef"
+    class="page-body absolute-top fit"
+    :thumb-style="{ width: '4px' }"
+  >
     <div v-if="!removeSpaceHeader" class="page-body-spacer-header"></div>
     <slot />
     <div v-if="!removeSpaceFooter" class="page-body-spacer-footer"></div>

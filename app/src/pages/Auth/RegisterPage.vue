@@ -16,7 +16,6 @@
             maxlength="255"
             :error="v$.first_name.$error"
             :error-message="v$.first_name.$errors[0]?.$message.toString()"
-            @blur="v$.first_name.$touch"
           />
 
           <q-input
@@ -25,7 +24,6 @@
             maxlength="255"
             :error="v$.last_name.$error"
             :error-message="v$.last_name.$errors[0]?.$message.toString()"
-            @blur="v$.last_name.$touch"
           />
 
           <q-input
@@ -34,7 +32,6 @@
             mask="date"
             :error="v$.birth_date.$error"
             :error-message="v$.birth_date.$errors[0]?.$message.toString()"
-            @blur="v$.birth_date.$touch"
           >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
@@ -59,7 +56,6 @@
             maxlength="255"
             :error="v$.email.$error"
             :error-message="v$.email.$errors[0]?.$message.toString()"
-            @blur="v$.email.$touch"
           />
           <q-input
             v-model="form.password"
@@ -68,7 +64,6 @@
             maxlength="255"
             :error="v$.password.$error"
             :error-message="v$.password.$errors[0]?.$message.toString()"
-            @blur="v$.password.$touch"
           />
           <q-input
             v-model="form.password_confirmation"
@@ -79,7 +74,6 @@
             :error-message="
               v$.password_confirmation.$errors[0]?.$message.toString()
             "
-            @blur="v$.password_confirmation.$touch"
           />
 
           <q-btn
@@ -89,7 +83,6 @@
             class="full-width q-mt-sm"
             unelevated
             no-caps
-            :disable="v$.$invalid"
           />
         </q-form>
       </div>
@@ -112,10 +105,13 @@ import { Device } from '@capacitor/device';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { Preferences } from '@capacitor/preferences';
+import { useHandleError } from 'src/composables/useHandleError';
 
 const $q = useQuasar();
 const authStore = useAuthStore();
 const router = useRouter();
+
+const externalServerValidation = () => true;
 
 const form: Ref<RegisterUserInfo> = ref({
   first_name: '',
@@ -126,6 +122,9 @@ const form: Ref<RegisterUserInfo> = ref({
   password_confirmation: '',
   device_name: '',
 });
+const $externalResults: Ref<{ [K in keyof RegisterUserInfo]?: string[] }> = ref(
+  {}
+);
 
 const rules = computed(() => {
   return {
@@ -141,6 +140,7 @@ const rules = computed(() => {
     email: {
       required: helpers.withMessage('Please enter your email', required),
       email: helpers.withMessage('Please enter a valid email', email),
+      externalServerValidation,
     },
     password: {
       required: helpers.withMessage('Please enter your password', required),
@@ -159,26 +159,33 @@ const rules = computed(() => {
   };
 });
 
-const v$ = useVuelidate(rules, form);
+const v$ = useVuelidate(rules, form, {
+  $rewardEarly: true,
+  $stopPropagation: true,
+  $externalResults,
+});
 
 const register = async () => {
+  $externalResults.value = {};
   await v$.value.$validate();
   if (v$.value.$invalid) return;
 
   $q.loading.show();
+
   const deviceName = (await Device.getInfo()).name;
   form.value.device_name = deviceName;
-
-  authStore
-    .register(form.value)
-    .then(async () => {
-      await Preferences.set({
-        key: 'auth_token',
-        value: authStore.token ?? '',
-      });
-      router.replace('/verify-email');
-    })
-    .finally(() => $q.loading.hide());
+  try {
+    await authStore.register(form.value);
+    await Preferences.set({
+      key: 'auth_token',
+      value: authStore.token ?? '',
+    });
+    router.replace('/verify-email');
+  } catch (error) {
+    useHandleError<RegisterUserInfo>(error, $externalResults);
+  } finally {
+    $q.loading.hide();
+  }
 };
 </script>
 

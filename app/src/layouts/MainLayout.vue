@@ -5,7 +5,7 @@
       leave-active-class="animated slideOutDown"
     >
       <q-footer bordered v-if="!useHideFooter()">
-        <q-tabs dense no-caps switch-indicator>
+        <q-tabs dense no-caps switch-indicator align="justify">
           <q-route-tab
             icon="home"
             label="Home"

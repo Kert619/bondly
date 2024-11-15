@@ -7,7 +7,7 @@
         <q-btn flat dense icon="chat" round />
         <q-btn flat dense round>
           <q-avatar size="sm">
-            <img src="https://cdn.quasar.dev/img/avatar.png" />
+            <q-img src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
         </q-btn>
       </div>

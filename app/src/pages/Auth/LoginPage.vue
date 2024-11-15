@@ -77,6 +77,7 @@ import { LoginUserInfo, useAuthStore } from 'src/stores/auth';
 import useVuelidate from '@vuelidate/core';
 import { required, email, helpers } from '@vuelidate/validators';
 import { Device } from '@capacitor/device';
+import { useHandleError } from 'src/composables/useHandleError';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -88,6 +89,10 @@ const form: Ref<LoginUserInfo> = ref({
   email: '',
   password: '',
 });
+
+const $externalResults: Ref<{ [K in keyof LoginUserInfo]?: string[] }> = ref(
+  {}
+);
 
 const rules = computed(() => {
   return {
@@ -101,7 +106,11 @@ const rules = computed(() => {
   };
 });
 
-const v$ = useVuelidate(rules, form);
+const v$ = useVuelidate(rules, form, {
+  $rewardEarly: true,
+  $stopPropagation: true,
+  $externalResults,
+});
 
 onMounted(() => {
   App.addListener('backButton', () => {
@@ -114,6 +123,7 @@ onUnmounted(() => {
 });
 
 const login = async () => {
+  $externalResults.value = {};
   await v$.value.$validate();
   if (v$.value.$invalid) return;
 
@@ -121,16 +131,18 @@ const login = async () => {
   const deviceName = (await Device.getInfo()).name;
   form.value.device_name = deviceName;
 
-  authStore
-    .login(form.value)
-    .then(async () => {
-      await Preferences.set({
-        key: 'auth_token',
-        value: authStore.token ?? '',
-      });
-      router.replace('/home');
-    })
-    .finally(() => $q.loading.hide());
+  try {
+    await authStore.login(form.value);
+    await Preferences.set({
+      key: 'auth_token',
+      value: authStore.token ?? '',
+    });
+    router.replace('/home');
+  } catch (error) {
+    useHandleError<LoginUserInfo>(error, $externalResults);
+  } finally {
+    $q.loading.hide();
+  }
 };
 
 watch(darkMode, async (newVal) => {

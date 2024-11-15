@@ -33,7 +33,9 @@ class LoginUserController extends Controller
         }
 
         return response()->json([
-            'message' => 'Invalid email or password.',
-        ], 401);
+            'errors' => [
+                'email' => ['Invalid email or password'],
+            ],
+        ], 422);
     }
 }

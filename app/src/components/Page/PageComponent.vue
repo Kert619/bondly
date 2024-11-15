@@ -3,22 +3,22 @@
     <div
       class="fit"
       :class="[
-        { 'page-nudger': route.meta.nudgePage },
-        { 'nudge-left': hasActiveChildPage && route.meta.nudgePage },
+        { 'page-nudger': nudgePage },
+        { 'nudge-left': hasActiveChildPage && nudgePage },
       ]"
     >
       <slot />
     </div>
     <router-view v-slot="{ Component }">
       <transition
-        :enter-active-class="enterTransitionClass"
-        :leave-active-class="leaveTransitionClass"
+        :enter-active-class="enterActiveClass"
+        :leave-active-class="leaveActiveClass"
       >
         <keep-alive>
           <component
             :is="Component"
-            @activated="hasActiveChildPage = true"
-            @deactivated="hasActiveChildPage = false"
+            @activated="handleActivated"
+            @deactivated="handleDeactivated"
           />
         </keep-alive>
       </transition>
@@ -27,16 +27,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onActivated, onDeactivated, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { onActivated, onDeactivated, ref } from 'vue';
+import { onBeforeRouteUpdate } from 'vue-router';
 
 const emit = defineEmits<{
   activated: [];
   deactivated: [];
 }>();
 
-const route = useRoute();
 const hasActiveChildPage = ref(false);
+const enterActiveClass = ref('');
+const leaveActiveClass = ref('');
+const nudgePage = ref(false);
 
 onActivated(() => {
   emit('activated');
@@ -46,19 +48,17 @@ onDeactivated(() => {
   emit('deactivated');
 });
 
-const enterTransitionClass = computed(() => {
-  if (route.meta.childTransitionEnterClass) {
-    return `animated ${route.meta.childTransitionEnterClass}`;
-  } else {
-    return 'animated slideInRight';
-  }
-});
+const handleActivated = () => {
+  hasActiveChildPage.value = true;
+};
 
-const leaveTransitionClass = computed(() => {
-  if (route.meta.childTransitionLeaveClass) {
-    return `animated ${route.meta.childTransitionLeaveClass}`;
-  } else {
-    return 'animated slideOutRight';
-  }
+const handleDeactivated = () => {
+  hasActiveChildPage.value = false;
+};
+
+onBeforeRouteUpdate((to, from) => {
+  enterActiveClass.value = `animated ${to.meta.enterTransitionClass} slow`;
+  leaveActiveClass.value = `animated ${from.meta.leaveTransitionClass} slow`;
+  nudgePage.value = !!to.meta.nudgeParent || !!from.meta.nudgeParent;
 });
 </script>

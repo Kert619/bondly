@@ -52,6 +52,7 @@
 
 <script setup lang="ts">
 import { Notify, useQuasar } from 'quasar';
+import { useHandleError } from 'src/composables/useHandleError';
 import { useAuthStore } from 'src/stores/auth';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -72,35 +73,45 @@ const startTimer = () => {
   }, 1000);
 };
 
-const resendEmail = () => {
-  $q.loading.show();
-  authStore
-    .resendEmailVerification()
-    .then(() => {
-      timer.value = 120;
-      startTimer();
-    })
-    .finally(() => $q.loading.hide());
+const resendEmail = async () => {
+  try {
+    $q.loading.show();
+    await authStore.resendEmailVerification();
+    timer.value = 120;
+    startTimer();
+
+    $q.notify({
+      message: 'Email has been sent!',
+      type: 'positive',
+      position: 'bottom',
+      actions: [{ icon: 'close', color: 'white', round: true }],
+    });
+  } catch (error) {
+    useHandleError(error);
+  } finally {
+    $q.loading.hide();
+  }
 };
 
 const goHome = async () => {
-  $q.loading.show();
-
-  authStore
-    .loadUser()
-    .then(() => {
-      if (authStore.user?.email_verified_at) {
-        router.replace('/home');
-      } else {
-        Notify.create({
-          message: 'Please verify your email first',
-          type: 'negative',
-          position: 'bottom',
-          actions: [{ icon: 'close', color: 'white', round: true }],
-        });
-      }
-    })
-    .finally(() => $q.loading.hide());
+  try {
+    $q.loading.show();
+    await authStore.loadUser();
+    if (authStore.user?.email_verified_at) {
+      router.replace('/home');
+    } else {
+      Notify.create({
+        message: 'Please verify your email first',
+        type: 'negative',
+        position: 'bottom',
+        actions: [{ icon: 'close', color: 'white', round: true }],
+      });
+    }
+  } catch (error) {
+    useHandleError(error);
+  } finally {
+    $q.loading.hide();
+  }
 };
 </script>
 

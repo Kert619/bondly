@@ -2,6 +2,7 @@
   <page-component>
     <page-header separator class="justify-between">
       <page-back-button to="/home" />
+      <q-btn label="GrandChild" flat to="/home/child/grandchild" />
     </page-header>
     <page-body :remove-space-footer="useHideFooter()">
       <div class="q-pa-md">

@@ -12,7 +12,6 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('layouts/AuthLayout.vue'),
-    meta: { nudgePage: true },
     beforeEnter: [guest],
     children: [
       {
@@ -23,6 +22,11 @@ const routes: RouteRecordRaw[] = [
             path: 'register',
             component: () => import('pages/Auth/RegisterPage.vue'),
             alias: '/register',
+            meta: {
+              nudgeParent: true,
+              enterTransitionClass: 'slideInRight',
+              leaveTransitionClass: 'slideOutRight',
+            },
           },
         ],
       },
@@ -44,15 +48,26 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         component: () => import('pages/Home/HomePage.vue'),
-        meta: {
-          childTransitionEnterClass: 'slideInUp',
-          childTransitionLeaveClass: 'slideOutDown',
-        },
         children: [
           {
             path: 'child',
             component: () => import('pages/Home/HomeChildPage.vue'),
-            meta: { hideFooter: true },
+            meta: {
+              hideFooter: true,
+              enterTransitionClass: 'slideInUp',
+              leaveTransitionClass: 'slideOutDown',
+            },
+            children: [
+              {
+                path: 'grandchild',
+                component: () => import('pages/Home/HomeGrandChildPage.vue'),
+                meta: {
+                  nudgeParent: true,
+                  enterTransitionClass: 'slideInRight',
+                  leaveTransitionClass: 'slideOutRight',
+                },
+              },
+            ],
           },
         ],
       },
