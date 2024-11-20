@@ -117,7 +117,7 @@ const goHome = async () => {
 
 <style scoped lang="scss">
 .q-card {
-  width: 80vw;
+  width: 90vw;
   max-width: 400px;
 }
 

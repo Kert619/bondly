@@ -13,6 +13,7 @@ export default boot(async () => {
     try {
       await authStore.loadUser();
       authStore.token = token;
+    } catch (error) {
     } finally {
       Loading.hide();
     }

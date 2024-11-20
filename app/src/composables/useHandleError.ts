@@ -9,6 +9,7 @@ export const useHandleError = <T = unknown>(
 ) => {
   if (
     error instanceof AxiosError &&
+    error.status == 422 &&
     externalResults &&
     error.response?.data.errors
   ) {
@@ -17,6 +18,13 @@ export const useHandleError = <T = unknown>(
     )) {
       externalResults.value[field as keyof T] = messages as string[];
     }
+  } else if (error instanceof AxiosError && error.status == 429) {
+    Notify.create({
+      message: messages[429],
+      type: 'negative',
+      position: 'bottom',
+      actions: [{ icon: 'close', color: 'white', round: true }],
+    });
   } else {
     Notify.create({
       message: messages[500],

@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { api } from 'boot/axios';
 import { ref, Ref } from 'vue';
+import { Gender } from 'src/enums/gender';
+import { RelationshipStatus } from 'src/enums/relationship-status';
+import { Mood } from 'src/enums/mood';
 
 export type RegisterUserInfo = {
   first_name: string;
@@ -31,8 +34,20 @@ export type UserProfile = {
   first_name: string;
   last_name: string;
   birth_date: Date;
+  gender: Gender;
+  relationship_status: RelationshipStatus;
+  address: string;
+  postal_code: string;
+  occupation: string;
+  company_name: string;
+  school: string;
+  profile_photo: string;
+  cover_photo: string;
+  bio: string;
+  mood: Mood;
   created_at: Date;
   updated_at: Date;
+  profile_completed: boolean;
 };
 
 export const useAuthStore = defineStore('user', () => {

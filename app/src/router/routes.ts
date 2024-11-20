@@ -3,6 +3,7 @@ import { auth } from 'src/guards/auth';
 import { guest } from 'src/guards/guest';
 import { verified } from 'src/guards/verified';
 import { unverified } from 'src/guards/unverified';
+import { profile } from 'src/guards/profile';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -34,16 +35,23 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/verify-email',
-    component: () => import('pages/Email/VerifyEmailPage.vue'),
+    component: () => import('pages/Auth/VerifyEmailPage.vue'),
     meta: { requiresAuth: true },
+    beforeEnter: [auth, unverified],
+  },
+
+  {
+    path: '/setup-profile',
+    component: () => import('pages/Auth/SetupProfilePage.vue'),
+    meta: { requiresAuth: true, requiresVerified: true },
     beforeEnter: [auth, unverified],
   },
 
   {
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth: true, requiresVerified: true },
-    beforeEnter: [auth, verified],
+    meta: { requiresAuth: true, requiresVerified: true, requiresProfile: true },
+    beforeEnter: [auth, verified, profile],
     children: [
       {
         path: '',
@@ -77,8 +85,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/videos',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth: true, requiresVerified: true },
-    beforeEnter: [auth, verified],
+    meta: { requiresAuth: true, requiresVerified: true, requiresProfile: true },
+    beforeEnter: [auth, verified, profile],
     children: [
       {
         path: '',
@@ -90,8 +98,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/notifications',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth: true, requiresVerified: true },
-    beforeEnter: [auth, verified],
+    meta: { requiresAuth: true, requiresVerified: true, requiresProfile: true },
+    beforeEnter: [auth, verified, profile],
     children: [
       {
         path: '',
@@ -103,8 +111,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/public',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth: true, requiresVerified: true },
-    beforeEnter: [auth, verified],
+    meta: { requiresAuth: true, requiresVerified: true, requiresProfile: true },
+    beforeEnter: [auth, verified, profile],
     children: [
       {
         path: '',
@@ -116,8 +124,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/events',
     component: () => import('layouts/MainLayout.vue'),
-    meta: { requiresAuth: true, requiresVerified: true },
-    beforeEnter: [auth, verified],
+    meta: { requiresAuth: true, requiresVerified: true, requiresProfile: true },
+    beforeEnter: [auth, verified, profile],
     children: [
       {
         path: '',

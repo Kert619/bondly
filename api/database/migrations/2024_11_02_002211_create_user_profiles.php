@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->date('birth_date');
             $table->enum('gender', [GenderEnum::MALE->value, GenderEnum::FEMALE->value])->nullable();
-            $table->enum('relationship_status', [RelationshipStatusEnum::SINGLE->value, RelationshipStatusEnum::MARRIED->value, RelationshipStatusEnum::WIDOWED->value, RelationshipStatusEnum::SPOUSE->value])->nullable();
+            $table->enum('relationship_status', [RelationshipStatusEnum::SINGLE->value, RelationshipStatusEnum::ENGAGED->value, RelationshipStatusEnum::DATING->value, RelationshipStatusEnum::MARRIED->value, RelationshipStatusEnum::WIDOWED->value, RelationshipStatusEnum::SEPERATED->value, RelationshipStatusEnum::DIVORCED->value])->nullable();
             $table->string('address', 1000)->nullable();
             $table->string('postal_code')->nullable();
             $table->string('occupation')->nullable();
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->text('cover_photo')->nullable();
             $table->string('bio', 500)->nullable();
             $table->enum('mood', [MoodEnum::ALL->value, MoodEnum::HAPPY->value, MoodEnum::AMUSED->value, MoodEnum::LOVE->value, MoodEnum::ANGRY->value, MoodEnum::SAD->value])->default(MoodEnum::ALL->value);
+            $table->boolean('profile_completed')->default(false);
             $table->timestamps();
         });
     }

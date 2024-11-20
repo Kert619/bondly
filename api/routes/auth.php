@@ -3,6 +3,11 @@
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginUserController;
+use App\Http\Controllers\RegisterUserController;
+
+Route::post('/register', RegisterUserController::class);
+Route::post('/login', LoginUserController::class)->middleware(['throttle:login']);
 
 Route::get('/email/verify', function () {
     return response()->json(['message' => 'Please verify your email first'], 403);

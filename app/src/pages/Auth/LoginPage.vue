@@ -22,7 +22,6 @@
             placeholder="Email"
             :error="v$.email.$error"
             :error-message="v$.email.$errors[0]?.$message.toString()"
-            @blur="v$.email.$touch"
           >
             <template v-slot:prepend>
               <q-icon name="email" />
@@ -35,7 +34,6 @@
             placeholder="Password"
             :error="v$.password.$error"
             :error-message="v$.password.$errors[0]?.$message.toString()"
-            @blur="v$.password.$touch"
           >
             <template v-slot:prepend>
               <q-icon name="lock" />
@@ -153,7 +151,7 @@ watch(darkMode, async (newVal) => {
 
 <style scoped lang="scss">
 .q-form {
-  width: 80vw;
+  width: 90vw;
   max-width: 400px;
 }
 </style>
