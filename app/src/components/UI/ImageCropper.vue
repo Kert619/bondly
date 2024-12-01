@@ -1,11 +1,11 @@
 <template>
-  <q-dialog v-model="show" full-height persistent no-shake>
-    <q-card flat square>
-      <div style="max-height: 400px">
+  <q-dialog v-model="show" full-height no-shake @hide="emit('hide')">
+    <q-card flat square class="column">
+      <div class="col">
         <img ref="imgRef" :src="src" />
       </div>
 
-      <div class="row q-mt-sm q-px-md q-gutter-sm justify-center">
+      <div class="col-auto row justify-center q-pa-md q-gutter-md">
         <q-btn
           label="Save"
           color="positive"
@@ -13,22 +13,6 @@
           no-caps
           unelevated
           @click="handleImageCropped"
-        />
-        <q-btn
-          label="Rotate Right"
-          color="primary"
-          icon="rotate_right"
-          no-caps
-          unelevated
-          @click="cropper?.rotate(90)"
-        />
-        <q-btn
-          label="Rotate Left"
-          color="primary"
-          icon="rotate_left"
-          no-caps
-          unelevated
-          @click="cropper?.rotate(-90)"
         />
         <q-btn
           label="Reset"
@@ -92,15 +76,17 @@ const hideDialog = () => {
 };
 
 const handleImageCropped = () => {
-  cropper
-    ?.getCroppedCanvas({
-      width: 256,
-      height: 256,
-    })
-    .toBlob((blob) => {
-      emit('cropped', blob as Blob);
-      emit('hide');
-    }, 'image/jpeg');
+  if (cropper) {
+    cropper
+      .getCroppedCanvas({
+        width: 256,
+        height: 256,
+      })
+      .toBlob((blob) => {
+        emit('cropped', blob as Blob);
+        emit('hide');
+      }, 'image/jpeg');
+  }
 };
 </script>
 

@@ -8,6 +8,7 @@
       color="primary"
       size="sm"
       icon="attach_file"
+      :disable="disable"
     />
     <!-- Hidden file input -->
     <input
@@ -15,30 +16,25 @@
       ref="fileRef"
       class="hidden"
       accept="image/*"
+      :multiple="multiple"
       @change="onFileChange"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Ref, ref, watch } from 'vue';
+import { ref } from 'vue';
 
 const emit = defineEmits<{
-  selected: [src: string];
+  selected: [files: FileList];
+}>();
+
+defineProps<{
+  multiple?: boolean;
+  disable?: boolean;
 }>();
 
 const fileRef = ref<HTMLInputElement | null>(null);
-const selectedFile: Ref<File | undefined | null> = ref(null);
-const imgSrc: Ref<string | null | undefined | ArrayBuffer> = ref(null);
-const fileReader = new FileReader();
-
-fileReader.onload = (ev: ProgressEvent<FileReader>) => {
-  imgSrc.value = ev.target?.result;
-
-  if (imgSrc.value && selectedFile.value) {
-    emit('selected', imgSrc.value as string);
-  }
-};
 
 // Function to trigger the file input click
 const triggerFileInput = () => {
@@ -48,12 +44,6 @@ const triggerFileInput = () => {
 // Function to handle file input change
 const onFileChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  selectedFile.value = target.files?.[0];
+  if (target.files) emit('selected', target.files);
 };
-
-watch(selectedFile, (newVal) => {
-  if (newVal) {
-    fileReader.readAsDataURL(newVal);
-  }
-});
 </script>

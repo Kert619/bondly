@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginUserController;
+use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Auth\UpdateUserProfileController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginUserController;
-use App\Http\Controllers\RegisterUserController;
 
 Route::post('/register', RegisterUserController::class);
 Route::post('/login', LoginUserController::class)->middleware(['throttle:login']);
@@ -32,3 +33,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return response()->json(['message' => 'Verification link sent!']);
 })->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::put('/update-user-profile', UpdateUserProfileController::class);
+});

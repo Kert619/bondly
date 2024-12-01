@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum RelationshipStatusEnum: string
+enum RelationshipStatus: string
 {
     case SINGLE = "single";
     case ENGAGED = 'engaged';

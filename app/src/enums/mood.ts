@@ -1,8 +1,13 @@
 export enum Mood {
   All = 'all',
   Happy = 'happy',
-  Amused = 'amused',
-  Love = 'love',
+  Calm = 'calm',
+  Excited = 'excited',
+  Relaxed = 'relaxed',
+  Grateful = 'grateful',
   Sad = 'sad',
-  Angry = 'angry',
+  Irritable = 'irritable',
+  Anxious = 'anxious ',
+  Bored = 'bored ',
+  Lonely = 'lonely ',
 }

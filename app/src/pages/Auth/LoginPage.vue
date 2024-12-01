@@ -10,66 +10,63 @@
         @click="darkMode = !darkMode"
       />
     </page-header>
-    <page-body>
-      <div class="absolute-center row justify-center items-center">
-        <q-form @submit="login">
-          <app-logo />
-          <div class="text-center text-overline">Register an account</div>
+    <page-body class="q-px-md">
+      <q-form @submit="submit" class="absolute-center full-width">
+        <app-logo />
+        <div class="text-center text-overline">Register an account</div>
 
-          <q-input
-            v-model="form.email"
-            type="email"
-            placeholder="Email"
-            :error="v$.email.$error"
-            :error-message="v$.email.$errors[0]?.$message.toString()"
-          >
-            <template v-slot:prepend>
-              <q-icon name="email" />
-            </template>
-          </q-input>
+        <q-input
+          v-model="form.email"
+          type="email"
+          placeholder="Email"
+          :error="v$.email.$error"
+          :error-message="v$.email.$errors[0]?.$message.toString()"
+        >
+          <template v-slot:prepend>
+            <q-icon name="email" />
+          </template>
+        </q-input>
 
-          <q-input
-            v-model="form.password"
-            type="password"
-            placeholder="Password"
-            :error="v$.password.$error"
-            :error-message="v$.password.$errors[0]?.$message.toString()"
-          >
-            <template v-slot:prepend>
-              <q-icon name="lock" />
-            </template>
-          </q-input>
+        <q-input
+          v-model="form.password"
+          type="password"
+          placeholder="Password"
+          :error="v$.password.$error"
+          :error-message="v$.password.$errors[0]?.$message.toString()"
+        >
+          <template v-slot:prepend>
+            <q-icon name="lock" />
+          </template>
+        </q-input>
 
-          <div class="q-mt-md">
-            <q-btn
-              type="submit"
-              color="primary"
-              label="Login"
-              class="full-width"
-              unelevated
-              no-caps
-            />
-            <q-btn
-              type="button"
-              flat
-              label="Register"
-              class="full-width q-mt-sm"
-              unelevated
-              no-caps
-              to="/register"
-            />
-          </div>
-        </q-form>
-      </div>
+        <div class="q-mt-md">
+          <q-btn
+            type="submit"
+            color="primary"
+            label="Login"
+            class="full-width"
+            unelevated
+            no-caps
+          />
+          <q-btn
+            type="button"
+            flat
+            label="Register"
+            class="full-width q-mt-sm"
+            unelevated
+            no-caps
+            to="/register"
+          />
+        </div>
+      </q-form>
     </page-body>
   </page-component>
 </template>
 
 <script setup lang="ts">
-import { App } from '@capacitor/app';
 import { useQuasar } from 'quasar';
-import { computed, onMounted, onUnmounted, Ref, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, Ref, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { Preferences } from '@capacitor/preferences';
 import { LoginUserInfo, useAuthStore } from 'src/stores/auth';
 import useVuelidate from '@vuelidate/core';
@@ -79,7 +76,6 @@ import { useHandleError } from 'src/composables/useHandleError';
 
 const $q = useQuasar();
 const router = useRouter();
-const route = useRoute();
 const authStore = useAuthStore();
 const darkMode = ref($q.dark.isActive);
 
@@ -110,17 +106,7 @@ const v$ = useVuelidate(rules, form, {
   $externalResults,
 });
 
-onMounted(() => {
-  App.addListener('backButton', () => {
-    if (route.path == '/login') App.exitApp();
-  });
-});
-
-onUnmounted(() => {
-  App.removeAllListeners();
-});
-
-const login = async () => {
+const submit = async () => {
   $externalResults.value = {};
   await v$.value.$validate();
   if (v$.value.$invalid) return;
@@ -148,10 +134,3 @@ watch(darkMode, async (newVal) => {
   await Preferences.set({ key: 'dark_mode', value: `${newVal}` });
 });
 </script>
-
-<style scoped lang="scss">
-.q-form {
-  width: 90vw;
-  max-width: 400px;
-}
-</style>

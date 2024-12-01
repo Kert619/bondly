@@ -7,7 +7,10 @@
         <q-btn flat dense icon="chat" round />
         <q-btn flat dense round>
           <q-avatar size="sm">
-            <q-img src="https://cdn.quasar.dev/img/avatar.png" />
+            <ImageBase
+              :src="userThumbnail"
+              transformations="n-small_thumbnail"
+            />
           </q-avatar>
         </q-btn>
       </div>
@@ -78,4 +81,17 @@
   </page-component>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ImagePath } from 'src/enums/image-path';
+import { useAuthStore } from 'src/stores/auth';
+import { computed } from 'vue';
+import ImageBase from 'components/UI/ImageBase.vue';
+
+const authStore = useAuthStore();
+
+const userThumbnail = computed(() => {
+  return authStore.userProfile?.profile_photo
+    ? `${ImagePath.Profile_Photo_Cropped}/${authStore.userProfile.profile_photo}`
+    : '/default-profile-256.png';
+});
+</script>

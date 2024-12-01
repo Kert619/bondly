@@ -16,7 +16,7 @@ img {
 }
 
 .q-avatar {
-  outline: 2px solid black;
+  outline: 2px solid $primary;
 }
 
 //transitions/animations
@@ -106,6 +106,10 @@ a {
     z-index: 1001;
   }
   &-body {
+    width: 100%;
+    max-width: $max-width;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
     &-spacer-header {
       height: 45px;

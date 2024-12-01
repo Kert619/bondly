@@ -89,6 +89,10 @@ module.exports = configure(function (/* ctx */) {
 
       env: {
         API: process.env.API ?? 'http://192.168.2.14:8000',
+        IK_PUBLIC_KEY:
+          process.env.IK_PUBLIC_KEY ?? 'public_yhgGcnR3UGOlugeuObTQtdR/ZzE=',
+        IK_ENDPOINT:
+          process.env.IK_ENDPOINT ?? 'https://ik.imagekit.io/oywlkpqgt',
       },
     },
 
@@ -102,7 +106,7 @@ module.exports = configure(function (/* ctx */) {
     framework: {
       config: {
         capacitor: {
-          backButtonExit: true / false / '*' / ['/login'],
+          backButtonExit: ['/login', '/setup-profile', '/home'], // Exits only on these routes
         },
         notify: {
           position: 'bottom',

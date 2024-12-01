@@ -4,88 +4,86 @@
       <page-back-button to="/login" />
     </page-header>
 
-    <page-body remove-space-footer>
-      <div class="q-pa-md fit row justify-center">
-        <q-form @submit="register">
-          <app-logo />
-          <div class="text-center text-overline">Register an account</div>
+    <page-body class="q-px-md" remove-space-footer>
+      <q-form @submit="register" class="absolute-center full-width">
+        <app-logo />
+        <div class="text-center text-overline">Register an account</div>
 
-          <q-input
-            v-model="form.first_name"
-            placeholder="First Name"
-            maxlength="255"
-            :error="v$.first_name.$error"
-            :error-message="v$.first_name.$errors[0]?.$message.toString()"
-          />
+        <q-input
+          v-model="form.first_name"
+          placeholder="First Name"
+          maxlength="255"
+          :error="v$.first_name.$error"
+          :error-message="v$.first_name.$errors[0]?.$message.toString()"
+        />
 
-          <q-input
-            v-model="form.last_name"
-            placeholder="Last Name"
-            maxlength="255"
-            :error="v$.last_name.$error"
-            :error-message="v$.last_name.$errors[0]?.$message.toString()"
-          />
+        <q-input
+          v-model="form.last_name"
+          placeholder="Last Name"
+          maxlength="255"
+          :error="v$.last_name.$error"
+          :error-message="v$.last_name.$errors[0]?.$message.toString()"
+        />
 
-          <q-input
-            v-model="form.birth_date"
-            placeholder="Birth Date"
-            mask="date"
-            :error="v$.birth_date.$error"
-            :error-message="v$.birth_date.$errors[0]?.$message.toString()"
-          >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy
-                  cover
-                  transition-show="scale"
-                  transition-hide="scale"
-                >
-                  <q-date v-model="form.birth_date">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-          <q-input
-            v-model="form.email"
-            type="email"
-            placeholder="Email"
-            maxlength="255"
-            :error="v$.email.$error"
-            :error-message="v$.email.$errors[0]?.$message.toString()"
-          />
-          <q-input
-            v-model="form.password"
-            type="password"
-            placeholder="Password"
-            maxlength="255"
-            :error="v$.password.$error"
-            :error-message="v$.password.$errors[0]?.$message.toString()"
-          />
-          <q-input
-            v-model="form.password_confirmation"
-            type="password"
-            placeholder="Confirm Password"
-            maxlength="255"
-            :error="v$.password_confirmation.$error"
-            :error-message="
-              v$.password_confirmation.$errors[0]?.$message.toString()
-            "
-          />
+        <q-input
+          v-model="form.birth_date"
+          placeholder="Birth Date"
+          mask="date"
+          :error="v$.birth_date.$error"
+          :error-message="v$.birth_date.$errors[0]?.$message.toString()"
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date v-model="form.birth_date">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+        <q-input
+          v-model="form.email"
+          type="email"
+          placeholder="Email"
+          maxlength="255"
+          :error="v$.email.$error"
+          :error-message="v$.email.$errors[0]?.$message.toString()"
+        />
+        <q-input
+          v-model="form.password"
+          type="password"
+          placeholder="Password"
+          maxlength="255"
+          :error="v$.password.$error"
+          :error-message="v$.password.$errors[0]?.$message.toString()"
+        />
+        <q-input
+          v-model="form.password_confirmation"
+          type="password"
+          placeholder="Confirm Password"
+          maxlength="255"
+          :error="v$.password_confirmation.$error"
+          :error-message="
+            v$.password_confirmation.$errors[0]?.$message.toString()
+          "
+        />
 
-          <q-btn
-            type="submit"
-            color="primary"
-            label="Register"
-            class="full-width q-mt-sm"
-            unelevated
-            no-caps
-          />
-        </q-form>
-      </div>
+        <q-btn
+          type="submit"
+          color="primary"
+          label="Register"
+          class="full-width q-mt-sm"
+          unelevated
+          no-caps
+        />
+      </q-form>
     </page-body>
   </page-component>
 </template>
@@ -188,10 +186,3 @@ const register = async () => {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.q-form {
-  width: 90vw;
-  max-width: 400px;
-}
-</style>

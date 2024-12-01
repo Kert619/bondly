@@ -34,7 +34,7 @@ export type UserProfile = {
   first_name: string;
   last_name: string;
   birth_date: Date;
-  gender: Gender;
+  gender: Gender | null;
   relationship_status: RelationshipStatus;
   address: string;
   postal_code: string;
@@ -83,11 +83,17 @@ export const useAuthStore = defineStore('user', () => {
     return response;
   };
 
+  const updateUserProfile = async (userProfile: Partial<UserProfile> = {}) => {
+    const response = await api.put('/update-user-profile', userProfile);
+    return response;
+  };
+
   return {
     register,
     login,
     loadUser,
     resendEmailVerification,
+    updateUserProfile,
     token,
     user,
     userProfile,
