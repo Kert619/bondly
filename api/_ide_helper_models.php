@@ -16,6 +16,43 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $url
+ * @property int $imageable_id
+ * @property string $imageable_type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $imageable
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereImageableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereImageableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Image whereUrl($value)
+ */
+	class Image extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Image> $images
+ * @property-read int|null $images_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post query()
+ */
+	class Post extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
@@ -61,6 +98,7 @@ namespace App\Models{
  * @property string|null $cover_photo
  * @property string|null $bio
  * @property string $mood
+ * @property bool $profile_completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
@@ -79,6 +117,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereMood($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereOccupation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile wherePostalCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereProfileCompleted($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereProfilePhoto($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereRelationshipStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserProfile whereSchool($value)

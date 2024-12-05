@@ -1,6 +1,6 @@
 <template>
   <page-component>
-    <page-header>
+    <page-header class="q-px-sm">
       <q-btn
         label="Go to home"
         flat

@@ -4,7 +4,7 @@
       enter-active-class="animated slideInUp"
       leave-active-class="animated slideOutDown"
     >
-      <q-footer bordered v-if="!useHideFooter()">
+      <q-footer bordered v-if="!hideFooter">
         <q-tabs dense no-caps switch-indicator align="justify">
           <q-route-tab
             icon="home"
@@ -53,12 +53,17 @@
 <script setup lang="ts">
 import { EventBus } from 'quasar';
 import { EventBusType } from 'src/boot/event-bus';
-import { useHideFooter } from 'src/composables/useHideFooter';
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const bus = inject<EventBus<EventBusType>>('bus');
 
 const handleRouteChanged = (path: string) => {
   bus?.emit('routeChanged', path);
 };
+
+const hideFooter = computed(() => {
+  return !!route.meta.hideFooter;
+});
 </script>

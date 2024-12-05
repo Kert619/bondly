@@ -1,9 +1,6 @@
 <template>
   <header class="page-header absolute-top column">
-    <div
-      class="col row items-center q-gutter-x-md q-px-md"
-      :class="$attrs.class"
-    >
+    <div class="col row items-center" :class="$attrs.class">
       <slot />
     </div>
     <q-separator v-if="separator" />

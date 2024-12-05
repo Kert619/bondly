@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Mood;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('url', 2048);
-            $table->morphs('imageable');
+            $table->text('content');
+            $table->enum('mood', array_map(fn($case) => $case->value, Mood::cases()));
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('posts');
     }
 };

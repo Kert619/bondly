@@ -5,6 +5,7 @@
     loading="lazy"
     initial-ratio="1"
     no-transition
+    no-spinner
   />
 </template>
 
@@ -25,7 +26,7 @@ const imageKit = new ImageKit({
 const placeholderSrc = imageKit.url({
   path: props.src,
   urlEndpoint: process.env.IK_ENDPOINT,
-  transformation: [{ raw: 'q-40,bl-5,w-200,cm-pad_resize' }], // Low-quality blurred placeholder
+  transformation: [{ raw: 'n-blur' }], // Low-quality blurred placeholder
 });
 
 const actualSrc = imageKit.url({

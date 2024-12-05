@@ -58,24 +58,13 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/Home/HomePage.vue'),
         children: [
           {
-            path: 'child',
-            component: () => import('pages/Home/HomeChildPage.vue'),
+            path: 'create-post',
+            component: () => import('pages/Home/CreatePostPage.vue'),
             meta: {
               hideFooter: true,
               enterTransitionClass: 'slideInUp',
               leaveTransitionClass: 'slideOutDown',
             },
-            children: [
-              {
-                path: 'grandchild',
-                component: () => import('pages/Home/HomeGrandChildPage.vue'),
-                meta: {
-                  nudgeParent: true,
-                  enterTransitionClass: 'slideInRight',
-                  leaveTransitionClass: 'slideOutRight',
-                },
-              },
-            ],
           },
         ],
       },

@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import { api } from 'boot/axios';
-import { ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import { Gender } from 'src/enums/gender';
 import { RelationshipStatus } from 'src/enums/relationship-status';
 import { Mood } from 'src/enums/mood';
+import { ImagePath } from 'src/enums/image-path';
 
 export type RegisterUserInfo = {
   first_name: string;
@@ -88,6 +89,16 @@ export const useAuthStore = defineStore('user', () => {
     return response;
   };
 
+  const userThumbnail = computed(() => {
+    return userProfile.value?.profile_photo
+      ? `${ImagePath.Profile_Photo_Cropped}/${userProfile.value.profile_photo}`
+      : '/default-profile-256.png';
+  });
+
+  const fullName = computed(() => {
+    return `${userProfile.value?.first_name} ${userProfile.value?.last_name}`;
+  });
+
   return {
     register,
     login,
@@ -97,5 +108,7 @@ export const useAuthStore = defineStore('user', () => {
     token,
     user,
     userProfile,
+    userThumbnail,
+    fullName,
   };
 });

@@ -1,6 +1,6 @@
 <template>
   <page-component>
-    <page-header class="justify-end">
+    <page-header class="justify-end q-px-sm">
       <q-btn
         flat
         dense

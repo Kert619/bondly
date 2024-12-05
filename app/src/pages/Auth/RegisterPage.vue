@@ -1,6 +1,6 @@
 <template>
   <page-component>
-    <page-header>
+    <page-header class="q-px-sm">
       <page-back-button to="/login" />
     </page-header>
 

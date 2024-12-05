@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\UpdateUserProfileRequest;
 use App\Models\UserProfile;
+use Illuminate\Routing\Controller;
 
 class UpdateUserProfileController extends Controller
 {
