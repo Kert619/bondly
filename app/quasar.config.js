@@ -27,7 +27,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['axios', 'global-components', 'load-user', 'event-bus'],
+    boot: ['axios', 'global-components', 'load-user', 'event-bus', 'echo'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -86,20 +86,12 @@ module.exports = configure(function (/* ctx */) {
           { server: false },
         ],
       ],
-
-      env: {
-        API: process.env.API ?? 'http://192.168.2.14:8000',
-        IK_PUBLIC_KEY:
-          process.env.IK_PUBLIC_KEY ?? 'public_yhgGcnR3UGOlugeuObTQtdR/ZzE=',
-        IK_ENDPOINT:
-          process.env.IK_ENDPOINT ?? 'https://ik.imagekit.io/oywlkpqgt',
-      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
+      open: true, // opens browser window automatically,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

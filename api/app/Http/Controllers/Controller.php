@@ -9,9 +9,9 @@ abstract class Controller
 {
     protected static string $model;
     private Model $modelInstance;
-    protected static $primaryKey = 'id';
     protected static $with = [];
     protected static $indexColumns = [];
+    protected string $primaryKey;
 
     public function storeValidations(): ?FormRequest
     {
@@ -25,13 +25,17 @@ abstract class Controller
     public function __construct()
     {
         $this->modelInstance =  new static::$model;
+        $this->primaryKey = $this->modelInstance->getKeyName();
     }
 
-    public function index() {}
+    public function index()
+    {
+        $request = request()->all();
+    }
 
     public function show(string $id)
     {
-        $model = $this->modelInstance->with(static::$with)->where(static::$primaryKey, $id)->select(static::$indexColumns)->firstOrFail();
+        $model = $this->modelInstance->with(static::$with)->where($this->primaryKey, $id)->select(static::$indexColumns)->firstOrFail();
         return $model;
     }
 

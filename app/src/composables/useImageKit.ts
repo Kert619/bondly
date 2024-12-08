@@ -18,8 +18,8 @@ type Folder =
 
 export const useImageKit = () => {
   const imageKit = new ImageKit({
-    urlEndpoint: process.env.IK_ENDPOINT as string,
-    publicKey: process.env.IK_PUBLIC_KEY,
+    urlEndpoint: import.meta.env.VITE_IK_ENDPOINT as string,
+    publicKey: import.meta.env.VITE_IK_PUBLIC_KEY,
   });
 
   const progress: Ref<Record<string, number>> = ref({});

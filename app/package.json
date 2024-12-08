@@ -24,7 +24,9 @@
     "axios": "^1.2.1",
     "cropperjs": "^1.6.2",
     "imagekit-javascript": "^3.0.2",
+    "laravel-echo": "^1.17.1",
     "pinia": "^2.0.11",
+    "pusher-js": "^8.4.0-rc2",
     "quasar": "^2.8.0",
     "vue": "^3.4.18",
     "vue-router": "^4.0.12"

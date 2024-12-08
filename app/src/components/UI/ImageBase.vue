@@ -18,20 +18,20 @@ const props = defineProps<{
 }>();
 
 const imageKit = new ImageKit({
-  urlEndpoint: process.env.IK_ENDPOINT as string,
-  publicKey: process.env.IK_PUBLIC_KEY,
+  urlEndpoint: import.meta.env.VITE_IK_ENDPOINT as string,
+  publicKey: import.meta.env.VITE_IK_PUBLIC_KEY,
 });
 
 // URLs for blurred placeholder and actual image
 const placeholderSrc = imageKit.url({
   path: props.src,
-  urlEndpoint: process.env.IK_ENDPOINT,
+  urlEndpoint: import.meta.env.VITE_IK_ENDPOINT,
   transformation: [{ raw: 'n-blur' }], // Low-quality blurred placeholder
 });
 
 const actualSrc = imageKit.url({
   path: props.src,
-  urlEndpoint: process.env.IK_ENDPOINT, // Full-quality image
+  urlEndpoint: import.meta.env.VITE_IK_ENDPOINT, // Full-quality image
   transformation: [{ raw: props.transformations ?? '' }],
 });
 </script>

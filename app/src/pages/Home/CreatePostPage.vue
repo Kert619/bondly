@@ -25,10 +25,12 @@
         />
       </div>
 
-      <q-separator />
+      <div style="max-height: 50vh" class="scroll">
+        <ImageGrid :images="images" />
+      </div>
 
       <q-list separator>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="pickImages">
           <q-item-section avatar>
             <q-icon name="filter" color="positive" />
           </q-item-section>
@@ -47,10 +49,43 @@
 </template>
 
 <script setup lang="ts">
+import { Camera } from '@capacitor/camera';
 import { useAuthStore } from 'src/stores/auth';
-import { ref } from 'vue';
+import { Ref, ref } from 'vue';
 import UserProfileAvatar from 'components/Profile/UserProfileAvatar.vue';
+import ImageGrid from 'components/UI/ImageGrid.vue';
 
 const authStore = useAuthStore();
 const text = ref('');
+const images: Ref<{ webPath: string; aspectRatio: number }[]> = ref([]);
+
+const pickImages = async () => {
+  try {
+    const result = await Camera.pickImages({});
+    images.value = await Promise.all(
+      result.photos.map(async (photo) => {
+        const aspectRatio = await getImageAspectRatio(photo.webPath);
+        return { webPath: photo.webPath, aspectRatio };
+      })
+    );
+
+    console.log(images.value);
+  } catch (error) {}
+};
+
+const getImageAspectRatio = async (imagePath: string): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+
+    img.onload = () => {
+      //once the image is loaded, get the natural width and height
+      const ratio = img.naturalWidth / img.naturalHeight;
+      resolve(ratio);
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image'));
+
+    img.src = imagePath;
+  });
+};
 </script>

@@ -27,6 +27,36 @@
 import { useAuthStore } from 'src/stores/auth';
 import ImageBase from 'components/UI/ImageBase.vue';
 import PostIndex from 'src/components/Post/PostIndex.vue';
+import { onActivated, onDeactivated } from 'vue';
+import { useQuasar } from 'quasar';
 
+const $q = useQuasar();
 const authStore = useAuthStore();
+
+type PostData = { postId: number; postUserId: number };
+
+type LikerData = PostData & { likerId: number };
+
+type CommenterData = PostData & { commenterId: number };
+
+onActivated(() => {
+  window.Echo.private('notifications.1')
+    .listen('PostLiked', (event: LikerData) => {
+      $q.notify({
+        message: `User ${event.likerId} liked your post ${event.postId}`,
+        type: 'positive',
+      });
+    })
+    .listen('PostCommented', (event: CommenterData) => {
+      $q.notify({
+        message: `User ${event.commenterId} commented on your post ${event.postId}`,
+        type: 'positive',
+      });
+    });
+});
+
+onDeactivated(() => {
+  window.Echo.leave('notifications.1');
+  console.log('Leaving channel');
+});
 </script>
