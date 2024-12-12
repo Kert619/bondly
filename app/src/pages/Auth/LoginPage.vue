@@ -73,6 +73,7 @@ import useVuelidate from '@vuelidate/core';
 import { required, email, helpers } from '@vuelidate/validators';
 import { Device } from '@capacitor/device';
 import { useHandleError } from 'src/composables/useHandleError';
+import { useEcho } from 'src/composables/useEcho';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -119,8 +120,10 @@ const submit = async () => {
     await authStore.login(form.value);
     await Preferences.set({
       key: 'auth_token',
-      value: authStore.token ?? '',
+      value: authStore.token as string,
     });
+
+    useEcho(authStore.token as string);
     router.replace('/home');
   } catch (error) {
     useHandleError<LoginUserInfo>(error, $externalResults);

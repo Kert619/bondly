@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { EventBus, QScrollArea } from 'quasar';
-import { EventBusType } from 'src/boot/event-bus';
+import { EventBusType } from 'src/global-types/event-bus-type';
 import { inject, onActivated, onDeactivated, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 

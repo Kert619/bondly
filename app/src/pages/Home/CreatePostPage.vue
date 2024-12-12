@@ -1,35 +1,33 @@
 <template>
   <page-component>
-    <page-header class="justify-between q-px-sm">
+    <page-header class="justify-between q-px-sm" separator>
       <page-back-button to="/login" />
       <q-btn label="Post" no-caps unelevated color="primary" size="sm" />
     </page-header>
-    <page-body>
+    <page-body style="padding-bottom: 96px">
       <div class="q-mt-md q-px-sm column q-gutter-y-sm">
+        <!-- USER AVATAR -->
         <UserProfileAvatar
           :src="authStore.userThumbnail"
           :name="authStore.fullName"
         />
 
+        <!-- USER CONTENT -->
         <q-input
           v-model="text"
           autogrow
           autofocus
           borderless
           placeholder="Share your ideas..."
-          :input-style="{
-            fontSize: '1.3rem',
-            lineHeight: '1.5',
-            maxHeight: '50vh',
-          }"
         />
       </div>
 
-      <div style="max-height: 50vh" class="scroll">
-        <ImageGrid :images="images" />
-      </div>
+      <!-- UPLOADED IMAGAES -->
+      <ImageGrid :images="images" />
 
-      <q-list separator>
+      <!-- BUTTONS FIXED AT BOTTOM -->
+      <q-list separator class="fixed-bottom">
+        <q-separator />
         <q-item clickable v-ripple @click="pickImages">
           <q-item-section avatar>
             <q-icon name="filter" color="positive" />
@@ -54,10 +52,11 @@ import { useAuthStore } from 'src/stores/auth';
 import { Ref, ref } from 'vue';
 import UserProfileAvatar from 'components/Profile/UserProfileAvatar.vue';
 import ImageGrid from 'components/UI/ImageGrid.vue';
+import { ImageGridType } from 'src/global-types/image-grid-type';
 
 const authStore = useAuthStore();
 const text = ref('');
-const images: Ref<{ webPath: string; aspectRatio: number }[]> = ref([]);
+const images: Ref<ImageGridType[]> = ref([]);
 
 const pickImages = async () => {
   try {
@@ -65,7 +64,7 @@ const pickImages = async () => {
     images.value = await Promise.all(
       result.photos.map(async (photo) => {
         const aspectRatio = await getImageAspectRatio(photo.webPath);
-        return { webPath: photo.webPath, aspectRatio };
+        return { webPath: photo.webPath, aspectRatio, style: {} };
       })
     );
 

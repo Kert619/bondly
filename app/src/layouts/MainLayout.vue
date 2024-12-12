@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { EventBus } from 'quasar';
-import { EventBusType } from 'src/boot/event-bus';
+import { EventBusType } from 'src/global-types/event-bus-type';
 import { computed, inject } from 'vue';
 import { useRoute } from 'vue-router';
 

@@ -30,7 +30,7 @@ class PostLiked implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('notifications.' . $this->postUserId),
+            new PrivateChannel('App.Models.User.' . $this->postUserId),
         ];
     }
 }

@@ -40,7 +40,7 @@ type LikerData = PostData & { likerId: number };
 type CommenterData = PostData & { commenterId: number };
 
 onActivated(() => {
-  window.Echo.private('notifications.1')
+  window.Echo.private('App.Models.User.1')
     .listen('PostLiked', (event: LikerData) => {
       $q.notify({
         message: `User ${event.likerId} liked your post ${event.postId}`,
@@ -56,7 +56,7 @@ onActivated(() => {
 });
 
 onDeactivated(() => {
-  window.Echo.leave('notifications.1');
+  window.Echo.leave('App.Models.User.1');
   console.log('Leaving channel');
 });
 </script>

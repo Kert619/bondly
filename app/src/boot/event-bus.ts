@@ -1,9 +1,6 @@
 import { EventBus } from 'quasar';
 import { boot } from 'quasar/wrappers';
-
-export type EventBusType = {
-  routeChanged: (path: string) => void;
-};
+import { EventBusType } from 'src/global-types/event-bus-type';
 
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
